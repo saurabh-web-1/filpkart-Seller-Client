@@ -4,7 +4,7 @@ import MainLayout from "../layouts/MainLayout";
 
 import SellerLanding from "../pages/sellerLanding";
 import SellerRegister from "../pages/SellerRegister";
-import SellerLogin from "../pages/SellerLogin";
+import SellerLogin from "../pages/sellerLogin";
 import SellerLayout from "../layouts/SellerLayout"; 
 import SellerOrders from "../pages/seller/SellerOrders";
 import AddProduct from "../pages/seller/AddProduct";
