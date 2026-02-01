@@ -41,7 +41,7 @@ const SellerLanding = () => {
           {/* Right */}
           <div className="flex justify-center">
             <img
-              src="https://img.freepik.com/free-photo/happy-couple-jumping-with-boxes_23-2148689932.jpg"
+              src="https://res.cloudinary.com/dveulcf0v/image/upload/v1769952800/ChatGPT_Image_Feb_1_2026_06_55_28_PM_pawbrg.png"
               alt="Seller Banner"
               className="rounded-lg shadow-lg max-h-[360px]"
             />
