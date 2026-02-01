@@ -1,5 +1,7 @@
-import { useEffect, useState } from "react";
-import { getSellerOrders } from "../../services/sellerApi";
+import { useEffect } from "react";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
+import { loadOrders } from "../../redux/slices/sellerSlice";
+
 
 import {
   BarChart,
@@ -11,13 +13,13 @@ import {
 } from "recharts";
 
 const SellerOrders = () => {
-  const [orders, setOrders] = useState([]);
+  const dispatch = useAppDispatch();
+  const orders = useAppSelector((s) => s.seller.orders);
 
   useEffect(() => {
-    getSellerOrders().then((res) => {
-      setOrders(res.data.orders || []);
-    });
+    dispatch(loadOrders());
   }, []);
+
 
   /* ---------- Order Stats ---------- */
   const totalOrders = orders.length;

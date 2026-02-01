@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { createSellerProduct } from "../../services/sellerApi";
+import { addSellerProduct  } from "../../services/sellerApi";
 import { useNavigate } from "react-router-dom";
 
 const AddProduct = () => {
@@ -118,7 +118,7 @@ const AddProduct = () => {
     });
 
     try {
-      await createSellerProduct(formData);
+      await addSellerProduct (formData);
       navigate("/seller/dashboard");
     } catch (err) {
       alert(err.response?.data?.message || "Upload failed");

@@ -1,49 +1,40 @@
-// Seller_Client > src > services > sellerApi.js
 import axios from "axios";
 
+/* =========================
+   AXIOS INSTANCE
+========================= */
 const sellerAPI = axios.create({
   baseURL: import.meta.env.VITE_API_URL,
 });
 
-
+/* =========================
+   REQUEST INTERCEPTOR
+========================= */
 sellerAPI.interceptors.request.use((req) => {
   const sellerToken = localStorage.getItem("sellerToken");
   const userToken = localStorage.getItem("token");
 
-  
+  /* ---------- SELLER ROUTES ---------- */
   if (req.url?.startsWith("/seller")) {
-
     const isAuthRoute =
       req.url.startsWith("/seller/auth/login") ||
       req.url.startsWith("/seller/auth/register");
 
-    if (!isAuthRoute) {
-      if (sellerToken) {
-        req.headers.Authorization = `Bearer ${sellerToken}`;
-      } else {
-        // console.log("SELLER TOKEN NOT FOUND");
-      }
+    if (!isAuthRoute && sellerToken) {
+      req.headers.Authorization = `Bearer ${sellerToken}`;
     }
   }
 
- 
+  /* ---------- USER ROUTES ---------- */
   else {
-    // console.log("🟢 USER ROUTE DETECTED");
-
     if (userToken) {
       req.headers.Authorization = `Bearer ${userToken}`;
-    } else {
-      // console.log("❌ USER TOKEN NOT FOUND");
     }
   }
 
-
+  /* ---------- CONTENT TYPE ---------- */
   if (req.data instanceof FormData) {
     delete req.headers["Content-Type"];
-
-    for (let pair of req.data.entries()) {
-      // console.log("   ", pair[0], pair[1]);
-    }
   } else {
     req.headers["Content-Type"] = "application/json";
   }
@@ -51,8 +42,9 @@ sellerAPI.interceptors.request.use((req) => {
   return req;
 });
 
-
-
+/* =========================
+   USER APIs
+========================= */
 export const userLogin = (data) => {
   return sellerAPI.post("/auth/login", data);
 };
@@ -65,8 +57,9 @@ export const loadUserProfile = () => {
   return sellerAPI.get("/users/me");
 };
 
-
-
+/* =========================
+   SELLER AUTH APIs
+========================= */
 export const sellerRegister = async (data) => {
   const res = await sellerAPI.post("/seller/auth/register", data);
   localStorage.setItem("sellerToken", res.data.token);
@@ -79,8 +72,9 @@ export const sellerLogin = async (data) => {
   return res.data;
 };
 
-
-
+/* =========================
+   SELLER ONBOARDING
+========================= */
 export const sellerStep2 = (data) => {
   return sellerAPI.post("/seller/step-2", data);
 };
@@ -89,8 +83,9 @@ export const sellerStep3 = (data) => {
   return sellerAPI.post("/seller/step-3", data);
 };
 
-
-
+/* =========================
+   SELLER PRODUCTS
+========================= */
 export const addSellerProduct = (data) => {
   return sellerAPI.post("/seller/products", data);
 };
@@ -99,14 +94,11 @@ export const getSellerProducts = () => {
   return sellerAPI.get("/seller/products");
 };
 
+/* =========================
+   SELLER ORDERS & DASHBOARD
+========================= */
 export const getSellerOrders = () => {
   return sellerAPI.get("/seller/orders");
-};
-
-
-
-export const createSellerProduct = (data) => {
-  return sellerAPI.post("/seller/products", data);
 };
 
 export const getSellerProfile = () => {

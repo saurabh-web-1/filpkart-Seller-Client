@@ -28,6 +28,8 @@ export const loadOrders = createAsyncThunk(
   "seller/loadOrders",
   async () => {
     const res = await getSellerOrders();
+        console.log("ORDERS API RESPONSE:", res.data);
+
     return res.data.orders;
   }
 );
